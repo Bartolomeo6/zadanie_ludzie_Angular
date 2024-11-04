@@ -1,15 +1,25 @@
 <form #form="ngForm" (ngSubmit)="zapisz()">
   <div>
-    <input type="text" name="nazwa" #nazwa [(ngModel)]="daneCzlowiek.nazwa">
+    <input type="text" name="nazwa" #nazwa="ngModel" [(ngModel)]="daneCzlowiek.nazwa" required pattern="[A-Z][a-z0-9\s^A]{2,20}">
+    <div class="text-danger" *ngIf="nazwa.invalid && (nazwa.dirty || form.submitted)">
+      <div *ngIf="nazwa.hasError('required')">
+        Coś
+      </div>
+    </div>
   </div>
   <div>
-    <input type="email" name="email" #email [(ngModel)]="daneCzlowiek.email">
+    <input type="email" name="email" #email="ngModel [(ngModel)]="daneCzlowiek.email">
+    <div class="text-danger" *ngIf="email.invalid && (email.dirty || form.submitted)">
+      <div *ngIf="email.hasError('required')">
+        Coś
+      </div>
+    </div>
   </div>
   <div>
-    <input type="number" name="wiek" #wiek [(ngModel)]="daneCzlowiek.wiek">
+    <input type="number" name="wiek" #wiek="ngModel" [(ngModel)]="daneCzlowiek.wiek">
   </div>
   <div>
-    <textarea #zainst name="zaintere" [(ngModel)]="daneCzlowiek.zainteresowania"></textarea>
+    <textarea #zainst="ngModel" name="zaintere" [(ngModel)]="daneCzlowiek.zainteresowania"></textarea>
   </div>
   <div>
     {{daneCzlowiek.ocena}} <input type="range" name="ocena" #ocena min="1" max="10" step="1" [(ngModel)]="daneCzlowiek.ocena">
