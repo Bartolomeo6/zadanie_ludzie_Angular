@@ -1,9 +1,10 @@
 <div *ngFor="let czlowiek of listaLudzi">
-  <p>Nazwa: {{czlowiek.nazwa}}</p>
-  <p>Email: {{czlowiek.email}}</p>
+  <p style="font-weight: bold;">Nazwa użytkownika: {{czlowiek.nazwa}}</p>
+  <p style="font-style: italic;">Email: {{czlowiek.email}}</p>
   <p>Ocena: {{czlowiek.ocena}}</p>
-  <p>Zawód: {{czlowiek.zawod}}</p>
-  <p>Plec: {{czlowiek.plec}}</p>
+  <p>Wybrany zawód: {{czlowiek.zawod}}</p>
+  <p>Płeć: {{czlowiek.plec}}</p>
   <p>Wiek: {{czlowiek.wiek}}</p>
   <p>Zainteresowania: {{czlowiek.zainteresowania}}</p>
+  <hr>
 </div>

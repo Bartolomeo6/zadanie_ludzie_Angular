@@ -5,7 +5,6 @@ import { CzlowiekComponent } from './czlowiek/czlowiek.component';
 import { AppComponent } from './app.component';
 
 export const routes: Routes = [
-  {path:"", component:AppComponent},
   {path: "formularz", component:FormularzComponent},
   {path: "czlowiek", component:CzlowiekComponent}
 ];

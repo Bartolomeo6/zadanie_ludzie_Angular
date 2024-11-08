@@ -5,7 +5,7 @@ export class Dane {
     public ocena: number,
     public zawod: string,
     public plec: Plec,
-    public wiek: number,
+    public wiek: number | null,
     public zainteresowania: string
   )
   {}

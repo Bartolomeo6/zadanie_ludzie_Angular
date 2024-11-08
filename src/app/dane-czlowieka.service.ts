@@ -12,7 +12,13 @@ export class DaneCzlowiekaService {
   }
 
   saveDataCzlowiek(daneCzlo:Dane){
-    this.daneCzlowieka.push(daneCzlo);
+    if(!this.daneCzlowieka.includes(daneCzlo)){
+      this.daneCzlowieka.push(daneCzlo);
+      alert("Pomyślnie dodano nową osobę!");
+    }
+    else{
+      alert("Ta osoba została już wcześniej dodana!");
+    }
   }
 
   constructor() { }

@@ -11,4 +11,6 @@ import { FormularzComponent } from "./formularz/formularz.component";
 })
 export class AppComponent {
   title = 'zainteresowania';
+  domek_emoji: string = '🏠';
+  czlowiek_emoji: string = '🙎';
 }

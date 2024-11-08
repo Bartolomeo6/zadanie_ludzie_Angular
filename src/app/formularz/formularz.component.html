@@ -1,40 +1,107 @@
 <form #form="ngForm" (ngSubmit)="zapisz()">
-  <div>
-    <input type="text" name="nazwa" #nazwa="ngModel" [(ngModel)]="daneCzlowiek.nazwa" required pattern="[A-Z][a-z0-9\s^A]{2,20}">
+
+  <!---------- NAZWA (pole string) ---------->
+  
+  <div class="form-group">
+
+    <label for="nazwa">Podaj swoją nazwę: </label>
+    <input type="text" class="form-control" placeholder="Twoja nazwa" name="nazwa" #nazwa="ngModel" [(ngModel)]="daneCzlowiek.nazwa" required pattern="[A-Z][a-z0-9\s^A]{2,20}">
+
     <div class="text-danger" *ngIf="nazwa.invalid && (nazwa.dirty || form.submitted)">
-      <div *ngIf="nazwa.hasError('required')">
-        Coś
+      <div *ngIf="nazwa.hasError('required') || nazwa.hasError('pattern')" style="color:red;">
+        Nazwa użytkownika musi zaczynać się z dużej litery i mieć 3-20 znaków!
       </div>
     </div>
+
   </div>
-  <div>
-    <input type="email" name="email" #email="ngModel [(ngModel)]="daneCzlowiek.email">
+
+  <!---------- EMAIL (pole string) ---------->
+
+  <div class="form-group">
+
+    <label for="email">Wprowadź email: </label>
+    <input type="text" placeholder="Adres email" name="email" #email="ngModel" [(ngModel)]="daneCzlowiek.email" required pattern="[a-z0-9._]+@[a-z0-9._]+\.[a-z]{2,}$">
+
     <div class="text-danger" *ngIf="email.invalid && (email.dirty || form.submitted)">
-      <div *ngIf="email.hasError('required')">
-        Coś
+      <div *ngIf="email.hasError('pattern') || email.hasError('required')" style="color:red;">
+        Popraw/wprowadź swój adres email!
       </div>
     </div>
+
   </div>
-  <div>
-    <input type="number" name="wiek" #wiek="ngModel" [(ngModel)]="daneCzlowiek.wiek">
+
+  <!---------- WIEK (pole number) ---------->
+
+  <div class="form-group">
+
+    <label for="wiek">Twój wiek to: </label>
+    <input type="number" placeholder="Wiek" name="wiek" #wiek="ngModel" [(ngModel)]="daneCzlowiek.wiek" required pattern="([1-9]?[0-9]|100)">
+
+    <div class="text-danger" *ngIf="wiek.invalid && (wiek.dirty || form.submitted)">
+      <div *ngIf="wiek.hasError('required') || wiek.hasError('pattern')" style="color: red;">
+        Możesz mieć maksymalnie 100 lat!
+      </div>
+    </div>
+
   </div>
-  <div>
-    <textarea #zainst="ngModel" name="zaintere" [(ngModel)]="daneCzlowiek.zainteresowania"></textarea>
+
+  <!---------- ZAINTERESOWANIA (textarea) ---------->
+
+  <div class="form-group">
+
+    <textarea #zainst="ngModel" #zaintere="ngModel" name="zaintere" [(ngModel)]="daneCzlowiek.zainteresowania" placeholder="Twoje zainteresowania" required></textarea>
+
+    <div class="text-danger" *ngIf="zaintere.invalid && (zaintere.dirty || form.submitted)">
+      <div *ngIf="zaintere.hasError('required')" style="color: red;">
+        Wpisz swoje zainteresowania!
+      </div>
+    </div>
+
   </div>
+
+  <!---------- OCENA (suwak "range") ---------->
+
   <div>
     {{daneCzlowiek.ocena}} <input type="range" name="ocena" #ocena min="1" max="10" step="1" [(ngModel)]="daneCzlowiek.ocena">
   </div>
 
-  <div>
-    <select [(ngModel)]="daneCzlowiek.zawod" name="zawod">
+  <!---------- ZAWÓD (select) ---------->
+
+  <div class="form-group">
+
+    <select [(ngModel)]="daneCzlowiek.zawod" name="zawod" required #zawod="ngModel">
+
       <option value="uczen">uczen</option>
       <option value="naucz">nauczyciel</option>
       <option value="rodz">rodzic</option>
       <option value="ospryw">osoba prywatna</option>
+
     </select>
+
+    <div class="text-danger" *ngIf="zawod.invalid && (zawod.dirty || form.submitted)">
+      <div *ngIf="zawod.hasError('required')" style="color: red;">
+        Wybierz zawód!
+      </div>
+    </div>
+
   </div>
-  <div>
-    <input type="checkbox" name="mezcz" #m [(ngModel)]="daneCzlowiek.plec">Man
+
+  <!---------- PŁEĆ (checkbox'y) ---------->
+
+  <div class="form-group">
+
+    <input type="checkbox" #mezcz="ngModel" name="mezcz" [(ngModel)]="czyZaznaczonyMez" (change)="aktualizujPlec()" [required]="!czyZaznaczKobieta"> Mężczyzna<br>
+    <input type="checkbox" #kobieta="ngModel" name="kobieta" [(ngModel)]="czyZaznaczKobieta" (change)="aktualizujPlec()" [required]="!czyZaznaczonyMez"> Kobieta
+
+    <div class="text-danger" *ngIf="(mezcz.invalid || kobieta.invalid) && ((mezcz.dirty || kobieta.dirty) || form.submitted)">
+      <div *ngIf="mezcz.hasError('required') || kobieta.hasError('required')" style="color: red;">
+        Proszę zaznaczyć pole z Twoją płcią!
+      </div>
+    </div>
+    
   </div>
-  <button type="submit" (click)="zapisz()">Prześlij</button>
+
+
+  <button type="submit" id="przyciskPrzeslij" [disabled]="!form.valid">Prześlij</button>
+  <button type="reset" id="przyciskReset">Resetuj</button>
 </form>
